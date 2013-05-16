@@ -13,3 +13,12 @@ If you're curious about how things work under the hood, you can also browse the 
 [getting started]: http://dev.socrata.com/publisher/getting-started
 [api documentation]: http://opendata.socrata.com/api/docs/
 
+Goals
+------------------------
+* clean up and modernize the library, including adding tests and docs
+* more flexible configuration options
+* a command-line wrapper for common socrata operations
+
+Not goals
+------------------------
+* no effort will be made to maintain backwards compatability with the deprecated socrata-python. This will NOT be a drop-in replacement!
