@@ -1,7 +1,9 @@
 A Python Client for Socrata
 ======================
 
-Socrata-python is dead (or, at least "deprecated"). Long live socratic.
+Socrata-python is dead (or, at least "deprecated"). Long live socratic. 
+
+We are _starting_ with a fork of that deprecated codebase, but it will evolve in ways that break backward compatability. This will NOT be a drop-in replacement for socrata-python! 
 
 Thanks to Aiden Scandella and Socrata for getting it this far!
 
@@ -19,6 +21,3 @@ Goals
 * more flexible configuration options
 * a command-line wrapper for common socrata operations
 
-Not goals
-------------------------
-* no effort will be made to maintain backwards compatability with the deprecated socrata-python. This will NOT be a drop-in replacement!
