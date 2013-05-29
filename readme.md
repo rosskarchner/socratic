@@ -27,6 +27,13 @@ optional arguments:
                         flag to actually publish
 ```
 
+Authentication
+--------------
+
+Authentication currently depends on environment variables.
+SOCRATA_USER: Your userID, the thing that looks like 'XXXX-XXX' in the URL, when looking at your user profile
+SOCRATA_PASSWORD: Your password
+SOCRATA_TOKEN: Your App Token, from the "Your Applications" page.
 
 History
 ---------
