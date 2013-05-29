@@ -2,6 +2,31 @@ A Socrata publisher written in Python
 ======================
 This library provides a Python interface to the [Socrata Publishing API], and a nifty command line client ('socratic').
 
+API docs are coming soon, but here is the command line usage:
+
+```
+usage: socratic [-h] [--replace XXXX-XXXX] [--append XXXX-XXXX]
+                [--blueprint blueprint.json] [--publish]
+                {import} target
+
+import or export data from a SODA source
+
+positional arguments:
+  {import}              operation to perform (currently, only "import" is
+                        supported
+  target                (import only) file to upload
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --replace XXXX-XXXX   Socrata view to replace with the uploaded data
+  --append XXXX-XXXX    Socrata view to append the uploaded data to
+  --blueprint blueprint.json
+                        Path to a json document describing column layout for a
+                        NEW dataset
+  --publish             Operations above will produce a working copy. Use this
+                        flag to actually publish
+```
+
 
 History
 ---------
