@@ -7,12 +7,15 @@ from socratic import socrata
 
 parser = argparse.ArgumentParser(description='import or export data from a SODA source')
 
-parser.add_argument('operation', default='export',choices=['import','export'] )
-parser.add_argument('target')
-parser.add_argument('--replace')
-parser.add_argument('--append')
-parser.add_argument('--blueprint')
-parser.add_argument('--publish', action='store_const', const=True)
+parser.add_argument('operation', default='export',choices=['import'],
+                    help="operation to perform (currently, only \"import\" is supported)" )
+parser.add_argument('target', help="(import only) file to upload")
+parser.add_argument('--replace', help="Socrata view to replace with the uploaded data", metavar="XXXX-XXXX")
+parser.add_argument('--append', help="Socrata view to append the uploaded data to", metavar="XXXX-XXXX")
+parser.add_argument('--blueprint', help="Path to a json document describing column layout for a NEW dataset",
+                    metavar="blueprint.json")
+parser.add_argument('--publish', action='store_const', const=True,
+                    help= "Operations above will produce a working copy. Use this flag to actually publish")
 
 
 if __name__ == '__main__':
