@@ -1,17 +1,19 @@
 __author__="Ross Karchner, after Aiden Scandella"
 __date__ ="$Jan 11, 2010 5:06:00 PM$"
 
-from setuptools import setup,find_packages
+from distutils.core import setup
 
 setup (
   name = 'socratic',
   version = '0.2',
-  packages = find_packages(),
+  packages = ['socratic'],
 
-  install_requires=['feedparser','requests','poster'],
+  install_requires=['requests'],
+  package_dir = {'': 'src'},
+  scripts=['src/socratic/scripts/socratic'],
 
   author = 'Ross Karchner, after Aiden Scandella',
   author_email = 'ross@karchner.com',
   license = '',
-  long_description= 'A native Python implementation of Socrata\'s REST API, using JSON'
+  long_description= 'A SODA (Socrata Open Data API) client library, with support for Socrata\'s extensions'
 )

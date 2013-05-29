@@ -1,0 +1,45 @@
+#!python
+import argparse
+import json
+import sys
+
+from socratic import socrata
+
+parser = argparse.ArgumentParser(description='import or export data from a SODA source')
+
+parser.add_argument('operation', default='export',choices=['import','export'] )
+parser.add_argument('target')
+parser.add_argument('--replace')
+parser.add_argument('--append')
+parser.add_argument('--blueprint')
+parser.add_argument('--publish', action='store_const', const=True)
+
+
+if __name__ == '__main__':
+    args = parser.parse_args()
+    session = socrata.authenticated_session()
+    api = socrata.API(session=session)
+    if args.operation == 'import':
+        print "uploading %s" % args.target
+        resp= api.upload(args.target, 
+                         append=args.append,
+                         replace=args.replace,
+                         blueprint_path=args.blueprint,
+                         debug=True)
+
+        if resp.status_code == 202:
+            print "Import queued for processing"
+            ticket = json.loads(resp.content)['ticket']
+            dataset_id=  api.wait_for_ticket(ticket)
+
+        elif resp.status_code == 200: 
+            dataset_id = json.loads(resp.content)['ticket']
+
+        else:
+            print "this load failed!"
+            sys.exit(1)
+
+        print "imported %s to view %s" % (args.target, dataset_id)
+    if args.publish:
+        published_id=api.publish_working_copy(dataset_id)
+        print "published working copy %s to %s" % (dataset_id, published_id)
