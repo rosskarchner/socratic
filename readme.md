@@ -51,5 +51,5 @@ Goals
 * clean up and modernize the library, including adding tests and docs
 * more flexible configuration options
 * a command-line wrapper for common socrata operations
-* Clear seperation between Socrata-proprietary methods and the SODA2 API
+* Clear separation between Socrata-proprietary methods and the SODA2 API
 
