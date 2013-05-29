@@ -41,8 +41,6 @@ class API(object):
             elif resp.status_code != 202:
                 resp.raise_for_status()        
 
-         
-        
     def create_working_copy(self, original_view):
         return self.call_publish(original_view, operation="copy")  
             
