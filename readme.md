@@ -13,7 +13,7 @@ import or export data from a SODA source
 
 positional arguments:
   {import}              operation to perform (currently, only "import" is
-                        supported
+                        supported)
   target                (import only) file to upload
 
 optional arguments:
