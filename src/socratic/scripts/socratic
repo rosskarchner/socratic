@@ -1,4 +1,4 @@
-#!python
+#!/usr/local/bin/python
 import argparse
 import json
 import sys
@@ -36,7 +36,7 @@ if __name__ == '__main__':
             dataset_id=  api.wait_for_ticket(ticket)
 
         elif resp.status_code == 200: 
-            dataset_id = json.loads(resp.content)['ticket']
+            dataset_id = json.loads(resp.content)['id']
 
         else:
             print "this load failed!"

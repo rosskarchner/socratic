@@ -23,10 +23,24 @@ class API(object):
         self.session = session or request.Session()
         self.host = host or os.environ.get('SOCRATA_HOST')
 
-    def call(self, resource='', method="GET", data=None, headers=None, json=True, files=None):
+    def call(self, resource='', method="GET", data=None, headers=None, files=None):
         url = urljoin (self.host, resource)
         client = getattr(self.session,method.lower())
-        resp = client(url, data=data, headers=headers, files=files)
+        kwargs = {}
+
+        if data:
+            kwargs['data'] = data
+        if headers:
+            kwargs['headers'] = headers
+        if files:
+            kwargs['files'] = files
+
+	print "%s %s" % (method, url)
+        resp = client(url, **kwargs)
+        if resp.status_code >= 400:
+            print resp.content
+            import pdb;pdb.set_trace()
+	    resp.raise_for_status()
         return resp
 
     def call_publish(self,view_id, operation=None):
@@ -35,11 +49,9 @@ class API(object):
             publish_url += "?method=%s" % operation
         while True:
             resp = self.call(publish_url, method="POST")
-            if resp.status_code == 200:
-                metadata = json.loads(resp.content)
+            metadata = json.loads(resp.content)
+            if 'id' in metadata:
                 return metadata['id']
-            elif resp.status_code != 202:
-                resp.raise_for_status()        
 
     def create_working_copy(self, original_view):
         return self.call_publish(original_view, operation="copy")  
@@ -48,8 +60,8 @@ class API(object):
         return self.call_publish(working_copy)  
 
     def wait_for_ticket(self, ticket):
-        time.sleep(120)
-        resp = self.call('/api/imports2.json?ticket=%s' % ticket)
+        time.sleep(10)
+        resp = self.call('/api/imports2.json?ticket=%s' % ticket, method="GET")
         if resp.status_code == 202:
             message = json.loads(resp.content)
             print "import status: %s Sleeping for a minute" % message['details']['status']
@@ -65,7 +77,7 @@ class API(object):
         response= self.call('/api/imports2?method=scan', method='POST', files={filename:f})
         parsed_response = json.loads(response.content)
         file_id= parsed_response['fileId']
-
+	
         import_data ={'fileId': file_id,
                       'name': filename}
 
